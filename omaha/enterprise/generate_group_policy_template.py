@@ -28,7 +28,7 @@ import os
 import sys
 
 
-HORIZONTAL_RULE = ';%s\n' % ('-' * 78)
+HORIZONTAL_RULE = ';{0!s}\n'.format(('-' * 78))
 MAIN_POLICY_KEY = 'Software\Policies\Google\Update'
 
 # pylint: disable-msg=C6004

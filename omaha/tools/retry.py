@@ -12,7 +12,7 @@ cmd = sys.argv[3:]
 
 for i in range(times):
   if i:
-    print 'Retrying %d...' % i
+    print 'Retrying {0:d}...'.format(i)
   retcode = subprocess.call(cmd)
   if retcode == 0:
     sys.exit(0)

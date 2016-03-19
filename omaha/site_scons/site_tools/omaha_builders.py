@@ -83,8 +83,7 @@ def SignDotNetManifest(env, target, unsigned_manifest):
   Returns:
     Output node list from env.Command().
   """
-  mage_sign_path = ('python $MAIN_DIR/tools/retry.py 10 5 %s/%s' %
-                    (os.getenv('OMAHA_NETFX_TOOLS_DIR'), 'mage.exe -Sign'))
+  mage_sign_path = ('python $MAIN_DIR/tools/retry.py 10 5 {0!s}/{1!s}'.format(os.getenv('OMAHA_NETFX_TOOLS_DIR'), 'mage.exe -Sign'))
   sign_manifest_cmd = (mage_sign_path +
                        ' $SOURCE -ToFile $TARGET -TimestampUri ' +
                        'http://timestamp.verisign.com/scripts/timstamp.dll ')
@@ -96,7 +95,7 @@ def SignDotNetManifest(env, target, unsigned_manifest):
     sign_manifest_cmd += ('-CertHash ' +
                           env['build_server_certificate_hash'])
   else:
-    sign_manifest_cmd += '-CertFile %s -Password %s' % (
+    sign_manifest_cmd += '-CertFile {0!s} -Password {1!s}'.format(
         env.GetOption('authenticode_file'),
         env.GetOption('authenticode_password'))
 
@@ -154,7 +153,7 @@ def OmahaTagExe(env, target, source, tag):
       target=target,
       source=source,
       action=tag_exe + ' $SOURCES $TARGET ' +
-      '%s append' % tag,
+      '{0!s} append'.format(tag),
   )
 
   return tag_cmd
@@ -575,7 +574,7 @@ def GetMultiarchLibName(env, lib_name):
   Returns:
     The appropriate library name.
   """
-  filename = (lib_name, '%s_64' % lib_name)[env.Bit('x64')]
+  filename = (lib_name, '{0!s}_64'.format(lib_name))[env.Bit('x64')]
   return '$LIB_DIR/' + filename + '.lib'
 
 
@@ -600,7 +599,7 @@ def ComponentStaticLibraryMultiarch(env, lib_name, *args, **kwargs):
 
   nodes32 = ComponentStaticLibrary(env.Clone(), lib_name, *args, **kwargs)
   nodes64 = ComponentStaticLibrary(CloneAndMake64Bit(env),
-                                   '%s_64' % lib_name,
+                                   '{0!s}_64'.format(lib_name),
                                    *args64, **kwargs64)
   return nodes32 + nodes64
 

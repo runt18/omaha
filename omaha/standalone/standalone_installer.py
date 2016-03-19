@@ -337,7 +337,7 @@ def BuildOfflineInstaller(
     return 0
 
   env.Command(
-      target='%s/%s' % (output_dir, log_name),
+      target='{0!s}/{1!s}'.format(output_dir, log_name),
       source=manifest_file_path,
       action=WriteLog,
       write_data=log_text
@@ -361,7 +361,7 @@ def BuildOfflineInstaller(
       bcj2_path=bcj2_path
   )
 
-  standalone_installer_path = '%s/%s' % (output_dir, target_name)
+  standalone_installer_path = '{0!s}/{1!s}'.format(output_dir, target_name)
 
   # Build an enterprise installer.
   if offline_installer.should_build_enterprise_msi:

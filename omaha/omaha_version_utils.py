@@ -112,8 +112,8 @@ def _GetMetainstallerPayloadFilenames(prefix,
                                       languages,
                                       omaha_version):
   """Returns list of metainstaller payload files for specified Omaha version."""
-  plugin_dll_name = '%s%s' % (prefix, update_plugin_filename)
-  bho_dll_name = '%s%s' % (prefix, bho_filename)
+  plugin_dll_name = '{0!s}{1!s}'.format(prefix, update_plugin_filename)
+  bho_dll_name = '{0!s}{1!s}'.format(prefix, bho_filename)
 
   # The list of files below needs to be kept in sync with the list in
   # SetupFiles::BuildFileLists().
@@ -124,8 +124,8 @@ def _GetMetainstallerPayloadFilenames(prefix,
   # the place, and require a ton of point fixes to customize.
   payload_files = [
       'GoogleUpdate.exe',
-      '%s.exe' % _CRASH_HANDLER_NAME,
-      '%sgoopdate.dll' % (prefix),
+      '{0!s}.exe'.format(_CRASH_HANDLER_NAME),
+      '{0!s}goopdate.dll'.format((prefix)),
       plugin_dll_name,
       bho_dll_name,
       'GoogleUpdateHelper.msi',
@@ -133,10 +133,10 @@ def _GetMetainstallerPayloadFilenames(prefix,
       'GoogleUpdateOnDemand.exe',
       'GoogleUpdateComRegisterShell64.exe',
       'GoogleUpdateWebPlugin.exe',
-      '%spsmachine.dll' % (prefix),
-      '%spsmachine_64.dll' % (prefix),
-      '%spsuser.dll' % (prefix),
-      '%spsuser_64.dll' % (prefix),
+      '{0!s}psmachine.dll'.format((prefix)),
+      '{0!s}psmachine_64.dll'.format((prefix)),
+      '{0!s}psuser.dll'.format((prefix)),
+      '{0!s}psuser_64.dll'.format((prefix)),
       ]
 
   if (omaha_version[0] >= 1 and
@@ -162,17 +162,17 @@ def _GetMetainstallerPayloadFilenames(prefix,
       (omaha_version[2] >= 22 or
        (omaha_version[2] == 21 and omaha_version[3] >= 85))):
     # 64-bit crash handler is added on 1.3.21.85 and later
-    payload_files.append('%s64.exe' % _CRASH_HANDLER_NAME)
+    payload_files.append('{0!s}64.exe'.format(_CRASH_HANDLER_NAME))
 
   for language in languages:
-    payload_files += ['%sgoopdateres_%s.dll' % (prefix, language)]
+    payload_files += ['{0!s}goopdateres_{1!s}.dll'.format(prefix, language)]
 
   return payload_files
 
 
 def ConvertVersionToString(version):
   """Converts a four-element version list to a version string."""
-  return '%d.%d.%d.%d' % (version[0], version[1], version[2], version[3])
+  return '{0:d}.{1:d}.{2:d}.{3:d}'.format(version[0], version[1], version[2], version[3])
 
 
 def GetONECLICK_PLUGIN_NAME():  # pylint: disable-msg=C6409
@@ -358,13 +358,13 @@ class SignedFileInfo(object):
     """Initializes the class members based on the parameters."""
 
     if file_version:
-      base_name = '%s%d' % (unversioned_name, file_version)
+      base_name = '{0!s}{1:d}'.format(unversioned_name, file_version)
     else:
       base_name = unversioned_name
 
     self.filename_base = base_name
-    self.filename = '%s.%s' % (self.filename_base, extension)
+    self.filename = '{0!s}.{1!s}'.format(self.filename_base, extension)
 
-    self.unsigned_filename_base = '%s_unsigned' % base_name
-    self.unsigned_filename = '%s.%s' % (self.unsigned_filename_base, extension)
+    self.unsigned_filename_base = '{0!s}_unsigned'.format(base_name)
+    self.unsigned_filename = '{0!s}.{1!s}'.format(self.unsigned_filename_base, extension)
 

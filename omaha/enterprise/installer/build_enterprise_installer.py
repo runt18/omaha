@@ -77,14 +77,14 @@ def BuildGoogleUpdateFragment(env,
   )
 
   wix_defines = [
-      '-dProductName="%s"' % product_name,
-      '-dProductNameLegalIdentifier="%s"' % product_name_legal_identifier,
+      '-dProductName="{0!s}"'.format(product_name),
+      '-dProductNameLegalIdentifier="{0!s}"'.format(product_name_legal_identifier),
       '-dProductVersion=' + msi_product_version,
       '-dProductOriginalVersionString=' + product_version,
-      '-dProductGuid="%s"' % product_guid,
-      '-dProductCustomParams="%s"' % product_custom_params,
-      '-dGoogleUpdateMetainstallerPath="%s"' % (
-          env.File(metainstaller_path).abspath),
+      '-dProductGuid="{0!s}"'.format(product_guid),
+      '-dProductCustomParams="{0!s}"'.format(product_custom_params),
+      '-dGoogleUpdateMetainstallerPath="{0!s}"'.format((
+          env.File(metainstaller_path).abspath)),
       ]
 
   wixobj_output = env.Command(
@@ -172,7 +172,7 @@ def _BuildMsiForExe(env,
   # changed" according to http://msdn.microsoft.com/en-us/library/aa367850.aspx.
   msi_product_id = GenerateNameBasedGUID(
       omaha_installer_namespace,
-      'Product %s %s' % (product_name, msi_base_name)
+      'Product {0!s} {1!s}'.format(product_name, msi_base_name)
   )
   msi_upgradecode_guid = GenerateNameBasedGUID(
       omaha_installer_namespace,
@@ -273,7 +273,7 @@ def GenerateNameBasedGUID(namespace, name):
   clock_seq_hi_and_reserved = 0x80 | (clock_seq_hi_and_reserved & 0x3f)
 
   return (
-      '%02X%02X%02X%02X-%02X%02X-%02X%02X-%02X%02X-%02X%02X%02X%02X%02X%02X' % (
+      '{0:02X}{1:02X}{2:02X}{3:02X}-{4:02X}{5:02X}-{6:02X}{7:02X}-{8:02X}{9:02X}-{10:02X}{11:02X}{12:02X}{13:02X}{14:02X}{15:02X}'.format(
           ord(md5_hash[0]), ord(md5_hash[1]), ord(md5_hash[2]),
           ord(md5_hash[3]),
           ord(md5_hash[4]), ord(md5_hash[5]),
@@ -322,8 +322,8 @@ def ConvertToMSIVersionNumberIfNeeded(product_version):
     return product_version
 
   # Check that the input version number is in range.
-  assert patch <= 16383, "Error, patch number %s out of range." % patch
-  assert build <= 65535, "Error, build number %s out of range." % build
+  assert patch <= 16383, "Error, patch number {0!s} out of range.".format(patch)
+  assert build <= 65535, "Error, build number {0!s} out of range.".format(build)
 
   msi_major = (1 << 6) | ((build & 0xffff) >> 10)
   msi_minor = (build >> 2) & 0xff
@@ -482,7 +482,7 @@ def BuildEnterpriseInstallerFromStandaloneInstaller(
   # upgrades.
   msi_product_id = GenerateNameBasedGUID(
       omaha_installer_namespace,
-      'Product %s %s %s' % (product_name, msi_base_name, product_version)
+      'Product {0!s} {1!s} {2!s}'.format(product_name, msi_base_name, product_version)
   )
   msi_upgradecode_guid = GenerateNameBasedGUID(
       omaha_installer_namespace,
@@ -506,8 +506,8 @@ def BuildEnterpriseInstallerFromStandaloneInstaller(
       '-dProductNameLegalIdentifier=' + product_name_legal_identifier,
       '-dProductVersion=' + msi_product_version,
       '-dProductOriginalVersionString=' + product_version,
-      '-dProductGuid="%s"' % product_guid,
-      '-dProductCustomParams="%s"' % product_custom_params,
+      '-dProductGuid="{0!s}"'.format(product_guid),
+      '-dProductCustomParams="{0!s}"'.format(product_custom_params),
       '-dStandaloneInstallerPath=' + (
           env.File(standalone_installer_path).abspath),
       '-dMsiInstallerCADll=' + env.File(custom_action_dll_path).abspath,

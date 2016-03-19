@@ -47,7 +47,7 @@ def RunTest(test_path):
     The exit code from the test process.
   """
 
-  print '\nRunning %s . . .\n' % test_path
+  print '\nRunning {0!s} . . .\n'.format(test_path)
 
   # Put './' in front of the file name to avoid accidentally running a file with
   # the same name in some other directory if test_path were just a file name.
@@ -70,18 +70,18 @@ def RunTests(test_paths):
 
   print 'Found the following tests to run:'
   for test in test_paths:
-    print '\t%s' % test
+    print '\t{0!s}'.format(test)
 
   # Run all tests and remembers those that failed.
   failed_tests = [t for t in test_paths if RunTest(t)]
 
-  print '\n\n%s test executables were run.' % len(test_paths)
+  print '\n\n{0!s} test executables were run.'.format(len(test_paths))
 
   failed_test_count = len(failed_tests)
   if failed_test_count:
     # Lists the executables that failed so the user can investigate them.
     print 'FAILED!'
-    print 'The following %s tests failed:\n' % failed_test_count
+    print 'The following {0!s} tests failed:\n'.format(failed_test_count)
     for test in failed_tests:
       print test
     return 1

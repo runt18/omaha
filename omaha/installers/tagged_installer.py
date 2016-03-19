@@ -31,9 +31,9 @@ def TagOneBundle(env, bundle, untagged_binary_path, output_dir):
   tag_exe = '$TESTS_DIR/ApplyTag.exe'
 
   tag_output = env.Command(
-      target='%s/%s' % (output_dir, relative_filepath),
+      target='{0!s}/{1!s}'.format(output_dir, relative_filepath),
       source=untagged_binary_path,
-      action='%s $SOURCES $TARGET %s append' % (
+      action='{0!s} $SOURCES $TARGET {1!s} append'.format(
           env.File(tag_exe).abspath, tag_str)
   )
 
@@ -80,7 +80,7 @@ def CreateTaggedInstallers(env, installers_txt_files_path, product_name,
   """
   bundles = _ReadAllBundleInstallerFiles(installers_txt_files_path)
 
-  untagged_binary = '%s%sSetup.exe' % (prefix, product_name)
+  untagged_binary = '{0!s}{1!s}Setup.exe'.format(prefix, product_name)
 
   tag_meta_installers.SetOutputFileNames(untagged_binary, bundles, '')
   for bundles_lang in bundles.itervalues():
@@ -88,7 +88,7 @@ def CreateTaggedInstallers(env, installers_txt_files_path, product_name,
       TagOneBundle(
           env=env,
           bundle=bundle,
-          untagged_binary_path='$STAGING_DIR/%s' % (untagged_binary),
+          untagged_binary_path='$STAGING_DIR/{0!s}'.format((untagged_binary)),
           output_dir='$TARGET_ROOT/Tagged_Installers',
       )
 
