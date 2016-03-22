@@ -36,7 +36,7 @@ def _AddTrustURLParametersAndName(manifest_file, output_file, display_name):
   manifest_contents = manifest_contents.replace('<deployment ', \
       '<deployment trustURLParameters="true" ')
   manifest_contents = manifest_contents.replace('\"xxxXXXxxx', \
-      '\"%s' % display_name)
+      '\"{0!s}'.format(display_name))
 
   f_out = open(output_file, 'w')
   # Works without needing to write the codecs.BOM_UTF8 at the beginning of the

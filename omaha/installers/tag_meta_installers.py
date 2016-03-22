@@ -143,9 +143,9 @@ def GetOutputFileName(test, name, lang):
     The output filename
   """
   if test:
-    file_name = 'Tagged_TEST_%sSetup_%s.exe' % (name, lang)
+    file_name = 'Tagged_TEST_{0!s}Setup_{1!s}.exe'.format(name, lang)
   else:
-    file_name = 'Tagged_%sSetup_%s.exe' % (name, lang)
+    file_name = 'Tagged_{0!s}Setup_{1!s}.exe'.format(name, lang)
   return file_name
 
 def BuildTagStringForBundle(bundle):
@@ -163,17 +163,16 @@ def BuildTagStringForBundle(bundle):
     first_app = False
     (guid, name, ap) = app
     display_name = UrlEncodeString(name)
-    args += 'appguid=%s&appname=%s&needsadmin=%s' % \
-            (guid, display_name, bundle.needs_admin)
+    args += 'appguid={0!s}&appname={1!s}&needsadmin={2!s}'.format(guid, display_name, bundle.needs_admin)
     if ap:
-      args += '&ap=%s' % ap
+      args += '&ap={0!s}'.format(ap)
 
   if bundle.usage_stats:
-    args += '&usagestats=%s' % bundle.usage_stats
+    args += '&usagestats={0!s}'.format(bundle.usage_stats)
   if bundle.browser:
-    args += '&browser=%s' % bundle.browser
+    args += '&browser={0!s}'.format(bundle.browser)
   if bundle.lang:
-    args += '&lang=%s' % bundle.lang
+    args += '&lang={0!s}'.format(bundle.lang)
   args += '\"'
   return args
 
@@ -188,8 +187,7 @@ def TagOneFile(file, app, applytag_exe_name):
 
   output_path = app.output_file_name
   if not os.path.exists(file):
-    print 'Could not find file %s required for creating %s' % \
-          (file, output_path)
+    print 'Could not find file {0!s} required for creating {1!s}'.format(file, output_path)
     return False
 
   arguments = [applytag_exe_name,
@@ -198,7 +196,7 @@ def TagOneFile(file, app, applytag_exe_name):
                tag_string,
                'append'
               ]
-  print 'Building %s with tag %s' % (output_path, tag_string)
+  print 'Building {0!s} with tag {1!s}'.format(output_path, tag_string)
   os.spawnv(os.P_WAIT, applytag_exe_name, arguments)
   return True
 
@@ -264,12 +262,12 @@ def main():
     return
 
   if not os.path.exists(file_name):
-    print "Invalid filename %s" % file_name
+    print "Invalid filename {0!s}".format(file_name)
     PrintUsage()
     return
 
   if not os.path.exists(input_file):
-    print "Invalid directory %s" % input_file
+    print "Invalid directory {0!s}".format(input_file)
     PrintUsage()
     return
 

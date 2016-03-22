@@ -39,7 +39,7 @@ def _GetStatusOutput(cmd):
 def _GenerateGuid():
   (status, guid) = _GetStatusOutput("uuidgen.exe /c")
   if status != 0:
-    raise SystemError("Failed to get GUID: %s" % guid)
+    raise SystemError("Failed to get GUID: {0!s}".format(guid))
   return guid
 
 

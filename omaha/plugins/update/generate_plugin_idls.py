@@ -45,7 +45,7 @@ def _GetStatusOutput(cmd):
 def _GenerateIDLText(idl_template):
   (status, guid) = _GetStatusOutput("uuidgen.exe")
   if status != 0:
-    raise SystemExit("Failed to get GUID: %s" % guid)
+    raise SystemExit("Failed to get GUID: {0!s}".format(guid))
 
   return idl_template % guid
 
